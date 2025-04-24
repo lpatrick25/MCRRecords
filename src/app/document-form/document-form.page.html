@@ -1,0 +1,78 @@
+<ion-header translucent="true">
+    <ion-toolbar>
+        <ion-title>Apply for {{ documentTitle }}</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+    <ion-card>
+        <ion-card-header>
+            <ion-card-title>Personal Information</ion-card-title>
+            <ion-card-subtitle>Please fill out all required fields</ion-card-subtitle>
+        </ion-card-header>
+
+        <ion-card-content>
+            <form (ngSubmit)="submitForm(form)" #form="ngForm">
+                <ion-item>
+                    <ion-label position="stacked">First Name *</ion-label>
+                    <ion-input required name="firstName" [(ngModel)]="formData.firstName"></ion-input>
+                </ion-item>
+
+                <ion-item>
+                    <ion-label position="stacked">Middle Name</ion-label>
+                    <ion-input name="middleName" [(ngModel)]="formData.middleName"></ion-input>
+                </ion-item>
+
+                <ion-item>
+                    <ion-label position="stacked">Last Name *</ion-label>
+                    <ion-input required name="lastName" [(ngModel)]="formData.lastName"></ion-input>
+                </ion-item>
+
+                <ion-item>
+                    <ion-label position="stacked">Suffix</ion-label>
+                    <ion-select name="suffix" interface="popover" [(ngModel)]="formData.suffix">
+                        <ion-select-option value="">None</ion-select-option>
+                        <ion-select-option value="Jr.">Jr.</ion-select-option>
+                        <ion-select-option value="Sr.">Sr.</ion-select-option>
+                        <ion-select-option value="II">II</ion-select-option>
+                        <ion-select-option value="III">III</ion-select-option>
+                    </ion-select>
+                </ion-item>
+
+                <ion-item>
+                    <ion-label position="stacked">Date of Birth *</ion-label>
+                    <ion-datetime name="dob" presentation="date" [(ngModel)]="formData.dob" required
+                        placeholder="Select date">
+                    </ion-datetime>
+                </ion-item>
+
+                <ion-item>
+                    <ion-label position="stacked">Place of Birth *</ion-label>
+                    <ion-input required name="placeOfBirth" [(ngModel)]="formData.placeOfBirth"></ion-input>
+                </ion-item>
+
+                <ion-item>
+                    <ion-label position="stacked">Father's Name</ion-label>
+                    <ion-input name="fatherName" [(ngModel)]="formData.fatherName"></ion-input>
+                </ion-item>
+
+                <ion-item>
+                    <ion-label position="stacked">Mother's Name</ion-label>
+                    <ion-input name="motherName" [(ngModel)]="formData.motherName"></ion-input>
+                </ion-item>
+
+                <ion-item>
+                    <ion-label position="stacked">Registry Number *</ion-label>
+                    <ion-input type="number" maxlength="8" name="registryNumber" [(ngModel)]="formData.registryNumber"
+                        required>
+                    </ion-input>
+                </ion-item>
+
+                <ion-button expand="block" type="submit" color="success" class="ion-margin-top">
+                    Submit Application
+                </ion-button>
+            </form>
+
+        </ion-card-content>
+    </ion-card>
+</ion-content>

@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">MCR Records</string>
+    <string name="title_activity_main">MCR Records</string>
+    <string name="package_name">capstone.mcr.abuyog</string>
+    <string name="custom_url_scheme">capstone.mcr.abuyog</string>
+</resources>

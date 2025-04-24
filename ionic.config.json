@@ -1,0 +1,7 @@
+{
+  "name": "MCR Records",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

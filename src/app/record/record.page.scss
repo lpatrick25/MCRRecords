@@ -1,0 +1,38 @@
+.card-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .card {
+    width: 100%;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+  }
+
+  .card-content {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .card-icon {
+    font-size: 3rem;
+    color: #f44336;
+  }
+
+  .card-text h2 {
+    margin: 0;
+    font-size: 1.3rem;
+    font-weight: bold;
+  }
+
+  .card-text p {
+    margin: 0;
+    color: #555;
+  }

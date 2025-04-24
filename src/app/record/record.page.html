@@ -1,0 +1,42 @@
+<ion-header>
+    <ion-toolbar>
+      <ion-title>MCR Record Keeping</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content class="ion-padding">
+    <div class="card-stack">
+      <!-- Card for Adding Documents -->
+      <ion-card class="card" (click)="goToAddDocument()">
+        <ion-card-content class="card-content">
+          <ion-icon name="document-text-outline" class="card-icon"></ion-icon>
+          <div class="card-text">
+            <h2>Add New Document</h2>
+            <p>Click here to add a new document to the system.</p>
+          </div>
+        </ion-card-content>
+      </ion-card>
+
+      <!-- Card for Viewing Documents -->
+      <ion-card class="card">
+        <ion-card-content class="card-content">
+          <ion-icon name="folder-open-outline" class="card-icon"></ion-icon>
+          <div class="card-text">
+            <h2>View Documents</h2>
+            <p>Click here to view existing documents in the system.</p>
+          </div>
+        </ion-card-content>
+      </ion-card>
+
+      <!-- Card for License Key -->
+      <ion-card class="card">
+        <ion-card-content class="card-content">
+          <ion-icon name="folder-open-outline" class="card-icon"></ion-icon>
+          <div class="card-text">
+            <h2>Update License Key</h2>
+            <p>Click here to update license key.</p>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </ion-content>

@@ -1,0 +1,44 @@
+<div class="custom-wrapper">
+    <div class="container">
+        <div class="logo-container">
+            <img src="assets/logoMCR.png" alt="MCR Logo" />
+            <h1>MCR LOGIN</h1>
+        </div>
+
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <!-- Username Field -->
+            <div class="mb-3">
+                <label for="userName">Username <span class="text-danger">*</span></label>
+                <input id="userName" type="text" class="form-control shadow-sm"
+                    [ngClass]="{ 'is-invalid': isInvalid('userName') }" formControlName="userName"
+                    placeholder="Enter Username" />
+                <div class="invalid-feedback" *ngIf="isInvalid('userName')">
+                    Username is required.
+                </div>
+            </div>
+
+            <!-- Password Field -->
+            <div class="mb-4">
+                <label for="password">Password <span class="text-danger">*</span></label>
+                <input id="password" type="password" class="form-control shadow-sm"
+                    [ngClass]="{ 'is-invalid': isInvalid('password') }" formControlName="password"
+                    placeholder="Enter Password" />
+                <div class="invalid-feedback" *ngIf="isInvalid('password')">
+                    <ng-container *ngIf="loginForm.get('password')?.hasError('required')">Password is
+                        required.</ng-container>
+                    <ng-container *ngIf="loginForm.get('password')?.hasError('minlength')">Minimum 8 characters
+                        required.</ng-container>
+                    <ng-container *ngIf="loginForm.get('password')?.hasError('maxlength')">Maximum 12 characters
+                        allowed.</ng-container>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn" [disabled]="loginForm.invalid || loading">
+                <span *ngIf="loading" class="spinner-border spinner-border-sm me-2" role="status"
+                    aria-hidden="true"></span>
+                Login
+            </button>
+        </form>
+    </div>
+</div>
