@@ -1,0 +1,52 @@
+.doc-card {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: transform 0.2s ease;
+    cursor: pointer;
+
+    &:hover {
+        transform: scale(1.02);
+    }
+}
+
+.doc-image {
+    object-fit: cover;
+    height: 200px;
+    width: 100%;
+    background-color: #f0f0f0;
+}
+
+.doc-name {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.doc-type {
+    color: var(--ion-color-medium);
+}
+
+/* Style the 'No Documents Found' card */
+.no-docs-card {
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    background-color: #f4f5f8;
+}
+
+.no-docs-content {
+    padding: 20px;
+}
+
+.no-docs-icon {
+    font-size: 60px;
+    margin-bottom: 15px;
+}
+
+.no-docs-message {
+    font-size: 16px;
+    color: #666;
+    font-weight: 500;
+    margin-top: 10px;
+}

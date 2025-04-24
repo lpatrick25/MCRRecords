@@ -19,4 +19,8 @@ export class RecordPage {
         this.router.navigate(['/certificate']);
     }
 
+    goToViewDocument() {
+        this.router.navigate(['/document']);
+    }
+
 }

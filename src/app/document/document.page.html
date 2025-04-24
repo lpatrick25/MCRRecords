@@ -1,0 +1,35 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>All Documents</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+    <!-- Search Input Field -->
+    <ion-searchbar [(ngModel)]="searchText" debounce="300" (ionInput)="filterDocuments()"
+        showClearButton="focus"></ion-searchbar>
+
+    <!-- Show a message when no documents are found -->
+    <ion-card *ngIf="filteredDocuments.length === 0" class="no-docs-card">
+        <ion-card-content class="no-docs-content">
+            <ion-icon name="document-outline" size="large" color="medium" class="no-docs-icon"></ion-icon>
+            <p class="no-docs-message">No documents found matching your search.</p>
+        </ion-card-content>
+    </ion-card>
+
+    <!-- Display documents when there are any -->
+    <ion-grid *ngIf="filteredDocuments.length > 0">
+        <ion-row class="ion-justify-content-center">
+            <ion-col size="12" size-md="6" *ngFor="let doc of filteredDocuments">
+                <ion-card (click)="openDocumentModal(doc)" class="doc-card">
+                    <ion-img [src]="doc.image_url || 'assets/logoMCR.png'" alt="Document Image"
+                        class="doc-image"></ion-img>
+                    <ion-card-header>
+                        <ion-card-title class="doc-name">{{ formatText(getFullName(doc)) }}</ion-card-title>
+                        <ion-card-subtitle class="doc-type">{{ formatText(doc.document_type) }}</ion-card-subtitle>
+                    </ion-card-header>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>

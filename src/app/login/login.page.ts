@@ -60,7 +60,7 @@ export class LoginPage {
                 localStorage.setItem('user', JSON.stringify(response.user));
 
                 // Navigate to home or desired route
-                this.navController.navigateRoot('/certificate');
+                this.navController.navigateRoot('/record');
             },
             error: async (err) => {
                 this.loading = false;

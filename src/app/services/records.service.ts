@@ -24,6 +24,14 @@ export class RecordsService {
         }, { headers });
     }
 
+    getAllDocuments() {
+        return this.http.get<any[]>(`${this.baseUrl}/documents`).toPromise();
+    }
+
+    getDocument(id: string) {
+        return this.http.get(`${this.baseUrl}/documents/${id}`).toPromise();
+    }
+
     async submitDocument(formSubmission: any, tiffFileUri: string): Promise<any> {
         try {
             const formData = new FormData();

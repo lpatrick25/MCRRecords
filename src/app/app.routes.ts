@@ -69,6 +69,14 @@ export const routes: Routes = [
     {
         path: 'document-form/:type/:title',
         loadComponent: () => import('./document-form/document-form.page').then(m => m.DocumentFormPage)
-    }
+    },
+    {
+        path: 'document',
+        loadComponent: () => import('./document/document.page').then(m => m.DocumentPage)
+    },
+    // {
+    //     path: 'document/:id',
+    //     loadChildren: () => import('./document/document.module').then(m => m.DocumentPageModule)
+    // }
 
 ];
