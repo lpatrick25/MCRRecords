@@ -25,7 +25,15 @@
             <p><strong>Father's Name:</strong> {{ document.father_name }}</p>
             <p><strong>Mother's Name:</strong> {{ document.mother_name }}</p>
             <p><strong>Registry Number:</strong> {{ document.registry_number }}</p>
-            <ion-img [src]="document.image_url" *ngIf="document.image_url"></ion-img>
+
+            <!-- Display the TIFF image if it's a TIFF -->
+            <ion-img *ngIf="isTiffFile" [src]="document.processedTiffUrl || document.image_url" alt="TIFF Document"></ion-img>
+
+            <!-- Display the PDF as a canvas -->
+            <div *ngIf="!isTiffFile">
+                <canvas id="pdf-canvas" *ngIf="pdfLoaded"></canvas>
+                <ion-spinner *ngIf="!pdfLoaded" name="crescent"></ion-spinner>
+            </div>
         </ion-card-content>
     </ion-card>
 </ion-content>

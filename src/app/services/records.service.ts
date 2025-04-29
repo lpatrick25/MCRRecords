@@ -32,25 +32,37 @@ export class RecordsService {
         return this.http.get(`${this.baseUrl}/documents/${id}`).toPromise();
     }
 
-    async submitDocument(formSubmission: any, tiffFileUri: string): Promise<any> {
+    async getDocumentsByPage(page: number) {
+        const params = { page: page.toString() };
+
+        try {
+            const response = await this.http.get<any>(`${this.baseUrl}/documents`, { params }).toPromise();
+            return response; // <-- Return the WHOLE response, not just data
+        } catch (error) {
+            console.error('Failed to fetch documents:', error);
+            return {
+                data: [],
+                last_page: 1,
+                current_page: page
+            };
+        }
+    }
+
+    async submitDocument(formSubmission: any, tiffFileUri: string, pdfFileUri: string): Promise<any> {
         try {
             const formData = new FormData();
 
-            // Append form data as a JSON string (optional: split into individual fields if needed)
             formData.append('formData', JSON.stringify(formSubmission));
 
-            // Use Capacitor to convert local file URI for fetch()
-            const safeUri = Capacitor.convertFileSrc(tiffFileUri);
-            console.log('Fetching file from URI:', safeUri);
+            // Fetch TIFF file as a blob
+            const tiffBlob = await this.fetchFileBlob(tiffFileUri);
+            formData.append('tiffFile', tiffBlob, 'document.tiff');
 
-            const fileBlob = await fetch(safeUri).then(res => {
-                if (!res.ok) throw new Error(`Failed to fetch file: ${res.statusText}`);
-                return res.blob();
-            });
+            // Fetch PDF file as a blob
+            const pdfBlob = await this.fetchFileBlob(pdfFileUri);
+            formData.append('pdfFile', pdfBlob, 'document.pdf');
 
-            formData.append('tiffFile', fileBlob, 'document.tiff');
-
-            // Send the form with file
+            // Send the form with both files
             return await lastValueFrom(
                 this.http.post(`${this.baseUrl}/documents/submit`, formData)
             );
@@ -59,4 +71,14 @@ export class RecordsService {
             throw error;
         }
     }
+
+    private async fetchFileBlob(fileUri: string): Promise<Blob> {
+        const safeUri = Capacitor.convertFileSrc(fileUri);
+        const response = await fetch(safeUri);
+        if (!response.ok) {
+            throw new Error(`Failed to fetch file: ${response.statusText}`);
+        }
+        return response.blob();
+    }
+
 }

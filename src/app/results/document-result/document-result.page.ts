@@ -2,7 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from "@angular/router";
-import { DocumentData, PageData, ScanbotBinarizationFilter, ScanbotSDK } from "capacitor-plugin-scanbot-sdk"; // Removed OutputMode
+import { DocumentData, OCRConfiguration, PageData, ScanbotBinarizationFilter, ScanbotSDK } from "capacitor-plugin-scanbot-sdk"; // Removed OutputMode
 import { CommonUtils } from "../../utils/common-utils";
 import { FileUtils } from "../../utils/file-utils";
 import { ActionSheetController, IonicModule, NavController } from "@ionic/angular";
@@ -111,26 +111,51 @@ export class DocumentResultPage implements OnInit {
     async onExport() {
         try {
             await this.utils.showLoader();
-            /*** Create a TIFF file from the document */
-            const result = await ScanbotSDK.Document.createTIFF({
+
+            // Create TIFF file from the document
+            const tiffResult = await ScanbotSDK.Document.createTIFF({
                 documentID: this.document.uuid,
                 options: {
                     binarizationFilter: new ScanbotBinarizationFilter({
-                        outputMode: 'ANTIALIASED' // This is the correct value here
+                        outputMode: 'ANTIALIASED',
                     }),
                     dpi: 300,
-                    compression: 'ADOBE_DEFLATE', // optional compression
+                    compression: 'ADOBE_DEFLATE',
                 },
             });
 
-            /*** Handle the result by displaying an action sheet */
-            await this.apiService.submitDocument(this.formSubmission, result.tiffFileUri);
-            // await this.fileUtils.openPdfFile(result.tiffFileUri);
-            // ✅ Show success message
+            // Log TIFF URI
+            console.log('Generated TIFF File URI:', tiffResult.tiffFileUri);
+
+            const ocrConfiguration: OCRConfiguration | undefined = {
+                engineMode: 'SCANBOT_OCR',
+            };
+
+            // Create PDF file from the document (similar to TIFF creation)
+            const pdfResult = await ScanbotSDK.Document.createPDF({
+                documentID: this.document.uuid,
+                options: {
+                    pageSize: 'A4',
+                    pageDirection: 'PORTRAIT',
+                    ocrConfiguration: ocrConfiguration,
+                },
+            });
+
+            // Log PDF URI
+            console.log('Generated PDF File URI:', pdfResult.pdfFileUri);
+
+            // Check if PDF URI is valid
+            if (!pdfResult.pdfFileUri) {
+                throw new Error('PDF file URI is missing.');
+            }
+
+            // Submit the document with both TIFF and PDF files
+            await this.apiService.submitDocument(this.formSubmission, tiffResult.tiffFileUri, pdfResult.pdfFileUri);
+
             await this.utils.showInfoAlert('Document uploaded successfully!');
-            // ✅ Navigate to certificate page
-            await this.navController.navigateRoot('/certificate'); // clears history so back won't go to DocumentResult
+            await this.navController.navigateRoot('/record');
         } catch (e: any) {
+            console.error('Error during document export:', e);
             await this.utils.showErrorAlert(e.message);
         } finally {
             await this.utils.dismissLoader();
